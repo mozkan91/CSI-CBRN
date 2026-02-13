@@ -1,2 +1,2 @@
 # CSI-CBRN
-CSI Medical - CBRN Products
+CSI Defence - CBRN Products
