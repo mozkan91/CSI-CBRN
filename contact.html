@@ -161,7 +161,7 @@
 
       <!-- Static sites can't send email by themselves. This form is visual-only unless you connect Formspree/Netlify Forms later. -->
       <div class="panel reveal" style="padding:18px;">
-        <form class="form" onsubmit="event.preventDefault(); alert('This demo form is static. Connect a form service (Formspree/Netlify) to receive submissions.');">
+        <form class="form" action="https://formspree.io/f/mojnwabk" method="POST">
           <div>
             <label class="note" for="name">Full Name</label>
             <input class="input" id="name" name="name" required />
