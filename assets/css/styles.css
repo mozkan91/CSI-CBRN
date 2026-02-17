@@ -694,6 +694,7 @@ textarea{min-height:140px; resize:vertical}
   padding: 8px 20px;
   border-radius: 5px;
   font-size: 1rem;
+  background-color: #787C76;
 }
 
 /* CATEGORY button — same visual language, row-height driver */
@@ -701,6 +702,7 @@ textarea{min-height:140px; resize:vertical}
   width:100%;
   text-align:left;
   border-radius: 5px;
+  background-color: #787C76; 
 
   padding: 12px 14px;
   font-size:.92rem;
@@ -816,7 +818,7 @@ textarea{min-height:140px; resize:vertical}
 
 /* View all products — NORMAL state (dark like others) */
 .mega-foot .btn{
-  background: rgba(7,10,14,.55);   /* same as .chip */
+  background: #787C76;   /* same as .chip */
   border: 1px solid var(--line);
   color: var(--text);
   box-shadow: none;
