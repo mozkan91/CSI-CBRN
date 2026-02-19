@@ -1402,3 +1402,38 @@ textarea{min-height:140px; resize:vertical}
   background: var(--mil-green);
   border-color: var(--mil-green-border);
 }
+
+
+/* === MOBILE MENU: hard override (must be at end of file) === */
+@media (max-width: 900px){
+  header.nav .nav-links{
+    display: none !important;          /* force hidden by default */
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: min(320px, calc(100vw - 24px));
+    padding: 10px;
+
+    flex-direction: column;
+    gap: 14px;
+    align-items: center;
+    text-align: center;
+
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: rgba(7,10,14,.85);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 24px 70px rgba(0,0,0,.55);
+    z-index: 9999;
+  }
+
+  header.nav .nav-links.is-open{
+    display: flex !important;          /* only show when opened */
+  }
+
+  header.nav .nav-toggle{
+    display: inline-flex !important;   /* ensure hamburger shows */
+    margin-left: auto;
+  }
+}
+
