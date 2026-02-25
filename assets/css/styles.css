@@ -434,6 +434,7 @@ img{max-width:100%; display:block}
   flex-direction: column;
   gap: 10px;
   background: rgba(7,10,14,.45);
+  flex: 1; 
 }
 
 /* Title */
