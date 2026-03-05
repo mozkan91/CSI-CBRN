@@ -224,34 +224,3 @@ navLinks.addEventListener("click", (e) => {
   }
 });
 
-
-(() => {
-  const form = document.getElementById("contactForm");
-  if (!form) return;
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    try {
-      const res = await fetch(form.action, {
-        method: "POST",
-        body: new FormData(form),
-        headers: { "Accept": "application/json" } // important for AJAX
-      });
-
-      if (res.ok) {
-        window.location.href = "/thank-you.html";
-      } else {
-        // Try to read Formspree error details (optional)
-        let msg = "Sorry — something went wrong. Please try again.";
-        try {
-          const data = await res.json();
-          if (data?.errors?.length) msg = data.errors.map(x => x.message).join("\n");
-        } catch {}
-        alert(msg);
-      }
-    } catch (err) {
-      alert("Network error — please check your connection and try again.");
-    }
-  });
-})();
