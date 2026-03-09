@@ -224,3 +224,21 @@ navLinks.addEventListener("click", (e) => {
   }
 });
 
+
+const detectorWrap = document.querySelector(".detector-wrap");
+const detectorTrigger = document.querySelector(".detector-trigger");
+
+if (detectorWrap && detectorTrigger) {
+
+  detectorTrigger.addEventListener("click", () => {
+    detectorWrap.classList.toggle("open");
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!detectorWrap.contains(e.target)) {
+      detectorWrap.classList.remove("open");
+    }
+  });
+
+}
+
