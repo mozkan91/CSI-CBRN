@@ -1439,13 +1439,12 @@ textarea{min-height:140px; resize:vertical}
   }
 }
 
-
 /* Detector dropdown wrapper */
 .detector-wrap{
   position: relative;
 }
 
-/* Button style (same feel as nav links) */
+/* Button style */
 .detector-trigger{
   background: none;
   border: none;
@@ -1465,34 +1464,39 @@ textarea{min-height:140px; resize:vertical}
 
 /* Dropdown menu */
 .detector-menu{
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%);
-
+  position: fixed;   /* IMPORTANT */
   display: none;
   flex-direction: column;
   gap: 6px;
 
   padding: 8px;
-  min-width: 180px;
+  min-width: 220px;
 
   background: rgba(7,10,14,.95);
   border: 1px solid var(--line);
   border-radius: 8px;
-  z-index: 999;
+  z-index: 9999;
+
+  box-shadow: 0 24px 70px rgba(0,0,0,.55);
+
+  margin-top: 0;
+  backdrop-filter: blur(10px);
+  width: max-content;
+  max-width: 280px;
 }
 
+/* Links */
 .detector-menu a{
-  padding: 8px 10px;
+  padding: 10px 12px;
   border-radius: 5px;
+  text-align: center;
 }
 
 .detector-menu a:hover{
   background: rgba(255,255,255,.05);
 }
 
-/* open state */
+/* Open state */
 .detector-wrap.open .detector-menu{
   display:flex;
 }
