@@ -231,20 +231,27 @@ const nav = document.querySelector("header.nav");
 
 if (detectorWrap && detectorTrigger && detectorMenu && nav) {
 
-  function positionDetectorMenu() {
-    const navRect = nav.getBoundingClientRect();
-    const triggerRect = detectorTrigger.getBoundingClientRect();
-
-    detectorMenu.style.top = `${Math.round(navRect.bottom)}px`;
-
-    // center dropdown under trigger
-    const menuWidth = detectorMenu.offsetWidth || 220;
-    const left = triggerRect.left + (triggerRect.width / 2) - (menuWidth / 2);
-
-    detectorMenu.style.left = `${Math.max(12, left)}px`;
+  function isMobile() {
+    return window.innerWidth <= 900;
   }
 
-  detectorTrigger.addEventListener("click", () => {
+  function positionDetectorMenu() {
+    if (isMobile()) {
+      detectorMenu.style.top = "";
+      detectorMenu.style.left = "";
+      return;
+    }
+
+    const navRect = nav.getBoundingClientRect();
+    const triggerRect = detectorTrigger.getBoundingClientRect();
+    const menuWidth = detectorMenu.offsetWidth || 220;
+
+    detectorMenu.style.top = `${Math.round(navRect.bottom)}px`;
+    detectorMenu.style.left = `${Math.round(triggerRect.left + (triggerRect.width / 2) - (menuWidth / 2))}px`;
+  }
+
+  detectorTrigger.addEventListener("click", (e) => {
+    e.stopPropagation();
     detectorWrap.classList.toggle("open");
 
     if (detectorWrap.classList.contains("open")) {
@@ -259,13 +266,13 @@ if (detectorWrap && detectorTrigger && detectorMenu && nav) {
   });
 
   window.addEventListener("scroll", () => {
-    if (detectorWrap.classList.contains("open")) {
+    if (!isMobile() && detectorWrap.classList.contains("open")) {
       positionDetectorMenu();
     }
   }, { passive: true });
 
   document.addEventListener("click", (e) => {
-    if (!detectorWrap.contains(e.target) && !detectorMenu.contains(e.target)) {
+    if (!detectorWrap.contains(e.target)) {
       detectorWrap.classList.remove("open");
     }
   });
