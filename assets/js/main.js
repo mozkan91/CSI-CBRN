@@ -21,6 +21,7 @@ revealEls.forEach(el => io.observe(el));
     }
   });
 })();
+
 // ===== Mega dropdown open/close + filtering =====
 (() => {
   const wrap = document.querySelector(".mega-wrap");
@@ -35,7 +36,11 @@ revealEls.forEach(el => io.observe(el));
   let activeIndustry = "all";
   let activeCat = "all";
 
-  function applyFilters(){
+  function isMobile() {
+    return window.innerWidth <= 900;
+  }
+
+  function applyFilters() {
     items.forEach((chip) => {
       const chipCat = chip.getAttribute("data-cat") || "";
       const chipIndustries = (chip.getAttribute("data-industry") || "").split(/\s+/);
@@ -47,33 +52,35 @@ revealEls.forEach(el => io.observe(el));
     });
   }
 
-  function setActive(groupEl, selector, btn){
-    groupEl.querySelectorAll(selector).forEach(b => b.classList.remove("active"));
+  function setActive(groupEl, selector, btn) {
+    groupEl.querySelectorAll(selector).forEach((b) => b.classList.remove("active"));
     btn.classList.add("active");
   }
 
-  function openMega(){
-  mega.classList.add("open");
-  trigger.setAttribute("aria-expanded", "true");
-  mega.scrollTop = 0; // reset internal scroll if any
-}
+  function openMega() {
+    mega.classList.add("open");
+    trigger.setAttribute("aria-expanded", "true");
 
-  function closeMega(){
+    if (!isMobile()) {
+      mega.scrollTop = 0;
+    }
+  }
+
+  function closeMega() {
     mega.classList.remove("open");
     trigger.setAttribute("aria-expanded", "false");
   }
 
   trigger.addEventListener("click", (e) => {
     e.preventDefault();
+    e.stopPropagation();
     mega.classList.contains("open") ? closeMega() : openMega();
   });
 
-  // Close on outside click
   document.addEventListener("click", (e) => {
     if (!wrap.contains(e.target)) closeMega();
   });
 
-  // Close on ESC
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeMega();
   });
@@ -81,6 +88,7 @@ revealEls.forEach(el => io.observe(el));
   filters?.addEventListener("click", (e) => {
     const btn = e.target.closest("button[data-industry]");
     if (!btn) return;
+
     activeIndustry = btn.getAttribute("data-industry");
     setActive(filters, "button[data-industry]", btn);
     applyFilters();
@@ -89,20 +97,33 @@ revealEls.forEach(el => io.observe(el));
   cats?.addEventListener("click", (e) => {
     const btn = e.target.closest("button[data-cat]");
     if (!btn) return;
+
     activeCat = btn.getAttribute("data-cat");
     setActive(cats, "button[data-cat]", btn);
     applyFilters();
   });
 
-  // Initial
   applyFilters();
 })();
+
+// ===== Position mega menu under nav on desktop only =====
 (() => {
   const nav = document.querySelector("header.nav");
   const mega = document.querySelector(".mega");
   if (!nav || !mega) return;
 
-  function positionMega(){
+  function isMobile() {
+    return window.innerWidth <= 900;
+  }
+
+  function positionMega() {
+    if (isMobile()) {
+      mega.style.top = "";
+      mega.style.left = "";
+      mega.style.right = "";
+      return;
+    }
+
     const rect = nav.getBoundingClientRect();
     mega.style.top = `${Math.round(rect.bottom)}px`;
   }
