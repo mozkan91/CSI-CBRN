@@ -1015,10 +1015,6 @@ textarea{min-height:140px; resize:vertical}
 }
 
 
-/* =======================
-   Product page layout
-======================= */
-
 /* HERO */
 .p-hero{
   margin-top: 0;
@@ -1028,23 +1024,27 @@ textarea{min-height:140px; resize:vertical}
   background: #0b0f15;
   padding: 0;
 
-  /* compact responsive height */
-  height: clamp(260px, 36vw, 500px);
+  width: 100%;
 }
 
 .p-hero-img{
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;     /* fills width nicely */
+  height: auto;              /* keep full image visible */
+  object-fit: contain;       /* no cropping */
   object-position: center;
   opacity: .95;
 }
 
 /* Mobile */
 @media (max-width: 900px){
-  .p-hero{ 
-    height: clamp(160px, 42vw, 260px);
+  .p-hero{
+    width: 100%;
+  }
+
+  .p-hero-img{
+    width: 100%;
+    height: auto;
   }
 }
 
