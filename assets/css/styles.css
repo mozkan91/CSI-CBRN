@@ -1407,14 +1407,20 @@ textarea{min-height:140px; resize:vertical}
 
 
 /* === MOBILE MENU: hard override (must be at end of file) === */
+
 @media (max-width: 900px){
   header.nav .nav-links{
-    display: none !important;          /* force hidden by default */
+    display: none !important;
     position: absolute;
     top: calc(100% + 10px);
     right: 0;
-    width: min(320px, calc(100vw - 24px));
-    padding: 10px;
+
+    width: min(360px, calc(100vw - 24px));
+    max-height: calc(100vh - 110px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+
+    padding: 10px 10px calc(22px + env(safe-area-inset-bottom));
 
     flex-direction: column;
     gap: 14px;
@@ -1423,19 +1429,93 @@ textarea{min-height:140px; resize:vertical}
 
     border: 1px solid var(--line);
     border-radius: 12px;
-    background: rgba(7,10,14,.85);
+    background: rgba(7,10,14,.92);
     backdrop-filter: blur(10px);
     box-shadow: 0 24px 70px rgba(0,0,0,.55);
     z-index: 9999;
   }
 
   header.nav .nav-links.is-open{
-    display: flex !important;          /* only show when opened */
+    display: flex !important;
   }
 
   header.nav .nav-toggle{
-    display: inline-flex !important;   /* ensure hamburger shows */
+    display: inline-flex !important;
     margin-left: auto;
+  }
+}
+
+@media (max-width: 900px){
+  .mega-wrap{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nav-links .mega-trigger{
+    width: 100%;
+    max-width: 360px;
+    justify-content: center;
+    text-align: center;
+    padding: 12px;
+  }
+
+  .mega{
+    position: static !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 360px;
+    max-height: none !important;
+    overflow: visible !important;
+
+    margin-top: 8px;
+    padding: 0;
+
+    border-radius: 10px;
+    box-shadow: none;
+  }
+
+  .mega-inner{
+    padding: 14px 14px calc(24px + env(safe-area-inset-bottom));
+  }
+
+  .mega-top{
+    padding: 4px 4px 14px;
+  }
+
+  .mega-body{
+    gap: 14px;
+  }
+
+  .mega-row{
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .mega-items{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .chip{
+    width: 100%;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .mega-foot{
+    padding-top: 16px;
+    padding-bottom: 4px;
+  }
+
+  .mega-foot .btn{
+    width: 100%;
+    justify-content: center;
   }
 }
 
