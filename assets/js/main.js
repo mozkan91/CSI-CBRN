@@ -151,7 +151,7 @@ revealEls.forEach(el => io.observe(el));
   let idx = thumbs.findIndex(t => t.classList.contains("is-active"));
   if (idx < 0) idx = 0;
 
-  function setActive(i) {
+  function setActive(i, scrollThumb = true) {
     idx = (i + thumbs.length) % thumbs.length;
 
     thumbs.forEach(t => t.classList.remove("is-active"));
@@ -161,23 +161,28 @@ revealEls.forEach(el => io.observe(el));
     main.src = t.dataset.src;
     main.alt = t.dataset.alt || "Product image";
 
-    t.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+    if (scrollThumb) {
+      t.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+    }
   }
 
-  thumbs.forEach((t, i) => t.addEventListener("click", () => setActive(i)));
-  prevBtn?.addEventListener("click", () => setActive(idx - 1));
-  nextBtn?.addEventListener("click", () => setActive(idx + 1));
+  thumbs.forEach((t, i) => {
+    t.addEventListener("click", () => setActive(i, true));
+  });
+
+  prevBtn?.addEventListener("click", () => setActive(idx - 1, true));
+  nextBtn?.addEventListener("click", () => setActive(idx + 1, true));
 
   window.addEventListener("keydown", (e) => {
-    // don’t hijack arrows when typing in inputs/textareas
     const tag = document.activeElement?.tagName?.toLowerCase();
     if (tag === "input" || tag === "textarea") return;
 
-    if (e.key === "ArrowLeft") setActive(idx - 1);
-    if (e.key === "ArrowRight") setActive(idx + 1);
+    if (e.key === "ArrowLeft") setActive(idx - 1, true);
+    if (e.key === "ArrowRight") setActive(idx + 1, true);
   });
 
-  setActive(idx);
+  // Initial load: update image, but DO NOT scroll page
+  setActive(idx, false);
 })();
 
 /* ===========================
