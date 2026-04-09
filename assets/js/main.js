@@ -22,6 +22,33 @@ revealEls.forEach(el => io.observe(el));
   });
 })();
 
+// ===== Shared nav dropdown closer =====
+function closeAllNavDropdowns(except = null) {
+  const productsTrigger = document.querySelector(".mega-trigger");
+  const productsMenu = document.querySelector(".mega");
+
+  const radioactiveTrigger = document.querySelector(".radmega-trigger");
+  const radioactiveMenu = document.querySelector(".radmega");
+
+  const detectorWrap = document.querySelector(".detector-wrap");
+  const detectorTrigger = document.querySelector(".detector-trigger");
+
+  if (except !== "products" && productsMenu && productsTrigger) {
+    productsMenu.classList.remove("open");
+    productsTrigger.setAttribute("aria-expanded", "false");
+  }
+
+  if (except !== "radioactive" && radioactiveMenu && radioactiveTrigger) {
+    radioactiveMenu.classList.remove("open");
+    radioactiveTrigger.setAttribute("aria-expanded", "false");
+  }
+
+  if (except !== "detector" && detectorWrap && detectorTrigger) {
+    detectorWrap.classList.remove("open");
+    detectorTrigger.setAttribute("aria-expanded", "false");
+  }
+}
+
 // ===== Mega dropdown open/close + filtering =====
 (() => {
   const wrap = document.querySelector(".mega-wrap");
@@ -58,13 +85,14 @@ revealEls.forEach(el => io.observe(el));
   }
 
   function openMega() {
-    mega.classList.add("open");
-    trigger.setAttribute("aria-expanded", "true");
+  closeAllNavDropdowns("products");
+  mega.classList.add("open");
+  trigger.setAttribute("aria-expanded", "true");
 
-    if (!isMobile()) {
-      mega.scrollTop = 0;
-    }
+  if (!isMobile()) {
+    mega.scrollTop = 0;
   }
+}
 
   function closeMega() {
     mega.classList.remove("open");
@@ -236,19 +264,21 @@ function setImage(thumb){
 const toggle = document.querySelector(".nav-toggle");
 const navLinks = document.querySelector(".nav-links");
 
-toggle.addEventListener("click", () => {
-  navLinks.classList.toggle("is-open");
+if (toggle && navLinks) {
+  toggle.addEventListener("click", () => {
+    navLinks.classList.toggle("is-open");
 
-  const isOpen = navLinks.classList.contains("is-open");
-  toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
-});
+    const isOpen = navLinks.classList.contains("is-open");
+    toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+  });
 
-navLinks.addEventListener("click", (e) => {
-  if (e.target.closest("a")) {
-    navLinks.classList.remove("is-open");
-    toggle.setAttribute("aria-expanded", "false");
-  }
-});
+  navLinks.addEventListener("click", (e) => {
+    if (e.target.closest("a")) {
+      navLinks.classList.remove("is-open");
+      toggle.setAttribute("aria-expanded", "false");
+    }
+  });
+}
 
 const detectorWrap = document.querySelector(".detector-wrap");
 const detectorTrigger = document.querySelector(".detector-trigger");
@@ -277,13 +307,20 @@ if (detectorWrap && detectorTrigger && detectorMenu && nav) {
   }
 
   detectorTrigger.addEventListener("click", (e) => {
-    e.stopPropagation();
-    detectorWrap.classList.toggle("open");
+  e.stopPropagation();
 
-    if (detectorWrap.classList.contains("open")) {
-      positionDetectorMenu();
-    }
-  });
+  const willOpen = !detectorWrap.classList.contains("open");
+
+  if (willOpen) {
+    closeAllNavDropdowns("detector");
+    detectorWrap.classList.add("open");
+    detectorTrigger.setAttribute("aria-expanded", "true");
+    positionDetectorMenu();
+  } else {
+    detectorWrap.classList.remove("open");
+    detectorTrigger.setAttribute("aria-expanded", "false");
+  }
+});
 
   window.addEventListener("resize", () => {
     if (detectorWrap.classList.contains("open")) {
@@ -303,3 +340,72 @@ if (detectorWrap && detectorTrigger && detectorMenu && nav) {
     }
   });
 }
+
+// ===== Radioactive Measurement mega menu =====
+(() => {
+  const wrap = document.querySelector(".radmega-wrap");
+  if (!wrap) return;
+
+  const trigger = wrap.querySelector(".radmega-trigger");
+  const mega = wrap.querySelector(".radmega");
+
+  function isMobile() {
+    return window.innerWidth <= 900;
+  }
+
+  function openMega() {
+  closeAllNavDropdowns("radioactive");
+  mega.classList.add("open");
+  trigger.setAttribute("aria-expanded", "true");
+
+  if (!isMobile()) {
+    mega.scrollTop = 0;
+  }
+}
+
+  function closeMega() {
+    mega.classList.remove("open");
+    trigger.setAttribute("aria-expanded", "false");
+  }
+
+  trigger.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    mega.classList.contains("open") ? closeMega() : openMega();
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!wrap.contains(e.target)) closeMega();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeMega();
+  });
+})();
+
+// ===== Position Radioactive Measurement mega menu under nav on desktop only =====
+(() => {
+  const nav = document.querySelector("header.nav");
+  const mega = document.querySelector(".radmega");
+  if (!nav || !mega) return;
+
+  function isMobile() {
+    return window.innerWidth <= 900;
+  }
+
+  function positionMega() {
+    if (isMobile()) {
+      mega.style.top = "";
+      mega.style.left = "";
+      mega.style.right = "";
+      return;
+    }
+
+    const rect = nav.getBoundingClientRect();
+    mega.style.top = `${Math.round(rect.bottom)}px`;
+  }
+
+  window.addEventListener("resize", positionMega);
+  window.addEventListener("scroll", positionMega, { passive: true });
+  positionMega();
+})();
