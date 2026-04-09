@@ -1573,7 +1573,7 @@ textarea{min-height:140px; resize:vertical}
 }
 
 .detector-menu a:hover{
-  background: rgba(255,255,255,.05);
+  background: #1E3A3A;
 }
 
 /* Open state */
