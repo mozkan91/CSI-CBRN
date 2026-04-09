@@ -1626,3 +1626,305 @@ textarea{min-height:140px; resize:vertical}
     text-align: center;
   }
 }
+
+
+/* =========================
+   RADIOACTIVE MEASUREMENT MEGA MENU
+========================= */
+
+.radmega-wrap{ position:relative; }
+
+/* Trigger */
+.nav-links .radmega-trigger{
+  display:inline-flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+
+  padding:8px 10px;
+  border-radius:5px;
+  border:1px solid transparent;
+  background:transparent;
+
+  color:var(--muted);
+  font-weight:600;
+  font-size:inherit;
+  font-family:inherit;
+  line-height:1.5;
+  cursor:pointer;
+
+  margin:0;
+  appearance:none;
+  -webkit-appearance:none;
+}
+
+.nav-links .radmega-trigger:hover{
+  color:var(--text);
+  border-color:var(--line);
+  background:#1E3A3A;
+}
+
+.radmega-trigger .chev{
+  opacity:.8;
+  font-size:.9em;
+}
+
+/* Dropdown panel */
+.radmega{
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 64px;
+  width: 100vw;
+
+  display: none;
+  z-index: 9999;
+
+  padding: 0;
+  background: #1E3A3A;
+
+  border-top: 1px solid rgba(255,255,255,.10);
+  border-bottom: 1px solid rgba(255,255,255,.10);
+  box-shadow: 0 24px 70px rgba(0,0,0,.70);
+
+  max-height: calc(100vh - 80px);
+  overflow: auto;
+  backdrop-filter: none;
+}
+
+.radmega.open{ display:block; }
+
+.radmega-inner{
+  width:100%;
+  margin:0;
+  padding:18px 20px;
+}
+
+@media (min-width:1200px){
+  .radmega-inner{ padding:22px 40px; }
+}
+
+/* Body */
+.radmega-body{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:16px;
+  padding-top:6px;
+  background:#1E3A3A;
+}
+
+/* Rows */
+.radmega-row{
+  display:grid;
+  grid-template-columns:280px 1fr;
+  gap:20px;
+  align-items:stretch;
+}
+
+@media (max-width:900px){
+  .radmega-row{
+    grid-template-columns:1fr;
+    gap:10px;
+  }
+}
+
+/* Items area */
+.radmega-items{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  align-items:stretch;
+  align-content:flex-start;
+}
+
+/* Footer */
+.radmega-foot{
+  display:flex;
+  justify-content:flex-end;
+  padding-top:14px;
+  border-top:1px solid var(--line);
+  margin-top:14px;
+  background:#1E3A3A;
+}
+
+/* Buttons / chips */
+.radmc, .radchip{
+  transition: background .15s ease, border-color .15s ease, box-shadow .15s ease, transform .12s ease;
+}
+
+/* Main title blocks */
+.radmc{
+  width:100%;
+  text-align:left;
+  border-radius:5px;
+  background-color:#787C76;
+  border:1px solid var(--line);
+  color:var(--text);
+  cursor:default;
+  font-weight:800;
+
+  padding:12px 14px;
+  font-size:.92rem;
+  line-height:1.2;
+
+  display:flex;
+  align-items:center;
+}
+
+/* Hover (optional subtle) */
+.radmc:hover{
+  background:#8a8e88;
+}
+
+/* Sub-items */
+.radchip{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  padding:12px 14px;
+  border-radius:5px;
+
+  border:1px solid var(--line);
+  background:rgba(7,10,14,.55);
+  color:var(--text);
+
+  font-weight:900;
+  letter-spacing:.02em;
+
+  width:auto;
+  white-space:nowrap;
+}
+
+.radchip:hover{
+  border-color:rgba(90, 231, 182, 0.75);
+  box-shadow:0 0 0 1px rgba(90, 231, 168, 0.35);
+  background:rgba(7,10,14,.55);
+  transform:translateY(-1px);
+}
+
+.radchip:active{
+  border-color:rgba(90, 231, 161, 0.95);
+  box-shadow:0 0 0 2px rgba(90, 231, 170, 0.45);
+  background:rgba(7,10,14,.55);
+  transform:scale(0.97);
+}
+
+/* Accessibility */
+.radchip:focus-visible,
+.radmc:focus-visible,
+.nav-links .radmega-trigger:focus-visible{
+  outline:none;
+  border-color:rgba(90, 231, 175, 0.85);
+  box-shadow:0 0 0 2px rgba(90, 231, 168, 0.25);
+}
+
+/* Footer button */
+.radmega-foot .btn{
+  background:#787C76;
+  border:1px solid var(--line);
+  color:var(--text);
+  box-shadow:none;
+}
+
+.radmega-foot .btn:hover{
+  background:var(--mil-green);
+  border-color:var(--mil-green-border);
+  color:var(--text);
+  box-shadow:0 0 0 2px rgba(90, 231, 177, 0.15) inset;
+  transform:translateY(-1px);
+}
+
+.radmega-foot .btn:active{
+  background:var(--mil-green-strong);
+  border-color:rgba(90, 231, 189, 0.85);
+  transform:scale(0.97);
+}
+
+/* =========================
+   RADIOACTIVE MEASUREMENT — MOBILE
+========================= */
+@media (max-width: 900px){
+  .radmega-wrap{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nav-links .radmega-trigger{
+    width: 100%;
+    max-width: 360px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 12px;
+  }
+
+  .radmega{
+    position: static !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    transform: none !important;
+
+    display: none;
+    width: 100% !important;
+    max-width: 360px;
+    max-height: none !important;
+    overflow: visible !important;
+
+    margin-top: 8px;
+    padding: 0;
+
+    border-radius: 10px;
+    box-shadow: none;
+  }
+
+  .radmega.open{
+    display: block;
+  }
+
+  .radmega-inner{
+    padding: 14px 14px calc(24px + env(safe-area-inset-bottom));
+  }
+
+  .radmega-body{
+    gap: 14px;
+    padding-top: 6px;
+  }
+
+  .radmega-row{
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .radmega-items{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .radmc{
+    width: 100%;
+    text-align: left;
+  }
+
+  .radchip{
+    width: 100%;
+    white-space: normal;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .radmega-foot{
+    padding-top: 16px;
+    padding-bottom: 4px;
+  }
+
+  .radmega-foot .btn{
+    width: 100%;
+    justify-content: center;
+  }
+}
