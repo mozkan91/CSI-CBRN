@@ -409,3 +409,82 @@ if (detectorWrap && detectorTrigger && detectorMenu && nav) {
   window.addEventListener("scroll", positionMega, { passive: true });
   positionMega();
 })();
+
+// LIGHTBOX FOR PRODUCT GALLERY WITH PREV/NEXT
+(() => {
+  const gallery = document.querySelector("[data-gallery]");
+  const mainImg = document.querySelector("[data-gallery-main]");
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.querySelector(".lightbox-img");
+  const closeBtn = document.querySelector(".lightbox-close");
+  const prevBtn = document.querySelector(".lightbox-prev");
+  const nextBtn = document.querySelector(".lightbox-next");
+
+  if (!gallery || !mainImg || !lightbox || !lightboxImg || !closeBtn || !prevBtn || !nextBtn) return;
+
+  const thumbs = Array.from(gallery.querySelectorAll(".p-thumb"));
+  let currentIndex = 0;
+
+  function getThumbIndexBySrc(src) {
+    return thumbs.findIndex((thumb) => {
+      const thumbSrc = thumb.dataset.src || "";
+      return src.includes(thumbSrc) || thumbSrc.includes(src);
+    });
+  }
+
+  function showLightboxImage(index) {
+    currentIndex = (index + thumbs.length) % thumbs.length;
+
+    const thumb = thumbs[currentIndex];
+    lightboxImg.src = thumb.dataset.src;
+    lightboxImg.alt = thumb.dataset.alt || "Product image";
+  }
+
+  function openLightbox() {
+    const activeIndex = thumbs.findIndex((thumb) => thumb.classList.contains("is-active"));
+    const mainIndex = getThumbIndexBySrc(mainImg.getAttribute("src"));
+
+    if (activeIndex >= 0) {
+      showLightboxImage(activeIndex);
+    } else if (mainIndex >= 0) {
+      showLightboxImage(mainIndex);
+    } else {
+      lightboxImg.src = mainImg.src;
+      lightboxImg.alt = mainImg.alt || "Product image";
+    }
+
+    lightbox.classList.add("active");
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove("active");
+  }
+
+  mainImg.style.cursor = "zoom-in";
+
+  mainImg.addEventListener("click", openLightbox);
+
+  prevBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    showLightboxImage(currentIndex - 1);
+  });
+
+  nextBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    showLightboxImage(currentIndex + 1);
+  });
+
+  closeBtn.addEventListener("click", closeLightbox);
+
+  lightbox.addEventListener("click", (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (!lightbox.classList.contains("active")) return;
+
+    if (e.key === "Escape") closeLightbox();
+    if (e.key === "ArrowLeft") showLightboxImage(currentIndex - 1);
+    if (e.key === "ArrowRight") showLightboxImage(currentIndex + 1);
+  });
+})();
