@@ -1274,6 +1274,72 @@ textarea{min-height:140px; resize:vertical}
   filter: drop-shadow(0 0 10px rgba(155,231,90,.25));
 }
 
+/* LIGHTBOX */
+.lightbox{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.88);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+}
+
+.lightbox.active{
+  display: flex;
+}
+
+.lightbox-img{
+  max-width: 88vw;
+  max-height: 84vh;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+.lightbox-close{
+  position: absolute;
+  top: 22px;
+  right: 28px;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 36px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.lightbox-nav{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.lightbox-prev{ left: 28px; }
+.lightbox-next{ right: 28px; }
+
+.lightbox-nav::before{
+  content: "";
+  width: 16px;
+  height: 16px;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  display: block;
+  margin: auto;
+}
+
+.lightbox-prev::before{
+  transform: rotate(135deg);
+}
+
+.lightbox-next::before{
+  transform: rotate(-45deg);
+}
+
 /* =========================
    THUMBS
 ========================= */
