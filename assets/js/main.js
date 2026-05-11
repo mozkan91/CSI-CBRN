@@ -24,14 +24,12 @@ revealEls.forEach(el => io.observe(el));
 
 // ===== Shared nav dropdown closer =====
 function closeAllNavDropdowns(except = null) {
+
   const productsTrigger = document.querySelector(".mega-trigger");
   const productsMenu = document.querySelector(".mega");
 
   const radioactiveTrigger = document.querySelector(".radmega-trigger");
   const radioactiveMenu = document.querySelector(".radmega");
-
-  const detectorWrap = document.querySelector(".detector-wrap");
-  const detectorTrigger = document.querySelector(".detector-trigger");
 
   if (except !== "products" && productsMenu && productsTrigger) {
     productsMenu.classList.remove("open");
@@ -43,10 +41,22 @@ function closeAllNavDropdowns(except = null) {
     radioactiveTrigger.setAttribute("aria-expanded", "false");
   }
 
-  if (except !== "detector" && detectorWrap && detectorTrigger) {
-    detectorWrap.classList.remove("open");
-    detectorTrigger.setAttribute("aria-expanded", "false");
+  if (except !== "detector") {
+
+    document.querySelectorAll(".detector-wrap").forEach((wrap) => {
+
+      wrap.classList.remove("open");
+
+      const trigger = wrap.querySelector(".detector-trigger");
+
+      if (trigger) {
+        trigger.setAttribute("aria-expanded", "false");
+      }
+
+    });
+
   }
+
 }
 
 // ===== Mega dropdown open/close + filtering =====
@@ -280,18 +290,21 @@ if (toggle && navLinks) {
   });
 }
 
-const detectorWrap = document.querySelector(".detector-wrap");
-const detectorTrigger = document.querySelector(".detector-trigger");
-const detectorMenu = document.querySelector(".detector-menu");
-const nav = document.querySelector("header.nav");
+// ===== Detector dropdowns =====
+document.querySelectorAll(".detector-wrap").forEach((detectorWrap) => {
 
-if (detectorWrap && detectorTrigger && detectorMenu && nav) {
+  const detectorTrigger = detectorWrap.querySelector(".detector-trigger");
+  const detectorMenu = detectorWrap.querySelector(".detector-menu");
+  const nav = document.querySelector("header.nav");
+
+  if (!detectorTrigger || !detectorMenu || !nav) return;
 
   function isMobile() {
     return window.innerWidth <= 900;
   }
 
   function positionDetectorMenu() {
+
     if (isMobile()) {
       detectorMenu.style.top = "";
       detectorMenu.style.left = "";
@@ -303,43 +316,87 @@ if (detectorWrap && detectorTrigger && detectorMenu && nav) {
     const menuWidth = detectorMenu.offsetWidth || 220;
 
     detectorMenu.style.top = `${Math.round(navRect.bottom)}px`;
-    detectorMenu.style.left = `${Math.round(triggerRect.left + (triggerRect.width / 2) - (menuWidth / 2))}px`;
+
+    detectorMenu.style.left =
+      `${Math.round(
+        triggerRect.left +
+        (triggerRect.width / 2) -
+        (menuWidth / 2)
+      )}px`;
+
   }
 
   detectorTrigger.addEventListener("click", (e) => {
-  e.stopPropagation();
 
-  const willOpen = !detectorWrap.classList.contains("open");
+    e.stopPropagation();
 
-  if (willOpen) {
+    const willOpen = !detectorWrap.classList.contains("open");
+
+    // CLOSE PRODUCTS + RADIOACTIVE
     closeAllNavDropdowns("detector");
-    detectorWrap.classList.add("open");
-    detectorTrigger.setAttribute("aria-expanded", "true");
-    positionDetectorMenu();
-  } else {
-    detectorWrap.classList.remove("open");
-    detectorTrigger.setAttribute("aria-expanded", "false");
-  }
-});
+
+    // CLOSE OTHER DETECTOR DROPDOWNS
+    document.querySelectorAll(".detector-wrap").forEach((wrap) => {
+
+      if (wrap !== detectorWrap) {
+
+        wrap.classList.remove("open");
+
+        const trigger = wrap.querySelector(".detector-trigger");
+
+        if (trigger) {
+          trigger.setAttribute("aria-expanded", "false");
+        }
+
+      }
+
+    });
+
+    // TOGGLE CURRENT
+    if (willOpen) {
+
+      detectorWrap.classList.add("open");
+      detectorTrigger.setAttribute("aria-expanded", "true");
+
+      positionDetectorMenu();
+
+    } else {
+
+      detectorWrap.classList.remove("open");
+      detectorTrigger.setAttribute("aria-expanded", "false");
+
+    }
+
+  });
 
   window.addEventListener("resize", () => {
+
     if (detectorWrap.classList.contains("open")) {
       positionDetectorMenu();
     }
+
   });
 
   window.addEventListener("scroll", () => {
+
     if (!isMobile() && detectorWrap.classList.contains("open")) {
       positionDetectorMenu();
     }
+
   }, { passive: true });
 
   document.addEventListener("click", (e) => {
+
     if (!detectorWrap.contains(e.target)) {
+
       detectorWrap.classList.remove("open");
+      detectorTrigger.setAttribute("aria-expanded", "false");
+
     }
+
   });
-}
+
+});
 
 // ===== Radioactive Measurement mega menu =====
 (() => {
