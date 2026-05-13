@@ -22,7 +22,7 @@
 }
 
 .logo{
-  height: 70px;      /* adjust for size */
+  height: 60px;      /* adjust for size */
   width: auto;
   display: block;
   flex-shrink: 0;
@@ -99,6 +99,7 @@
     backdrop-filter: blur(10px);
     box-shadow: 0 24px 70px rgba(0,0,0,.55);
     z-index: 9999;
+
   }
 
   .nav-links.is-open{ display: flex; }
@@ -173,37 +174,47 @@ img{max-width:100%; display:block}
   background: linear-gradient(to bottom, rgba(7,10,14,.92), rgba(7,10,14,.65));
   border-bottom:1px solid var(--line);
 }
+
 .nav-inner{
   display:flex; align-items:center; justify-content:space-between;
   padding:14px 0;
   gap:18px;
 }
+
 .brand{
   display:flex; align-items:center; gap:10px;
   letter-spacing:.08em;
   text-transform:uppercase;
   font-weight:700;
 }
+
 .badge{
   width:12px; height:12px; border-radius:3px;
   background:linear-gradient(135deg, var(--accent), var(--accent2));
   box-shadow: 0 0 18px rgba(34, 59, 26, 0.908);
 }
+
 .nav-links{
-  display:flex; gap:18px; align-items:center;
+  display:flex;
+  gap:14px;
+  align-items:center;
   color:var(--muted);
   font-weight:600;
+  font-size:0.85rem;
+  
 }
+
 .nav-links a{
   padding:8px 10px;
   border-radius:5px;
   border:1px solid transparent;
   text-align: center;
 }
+
 .nav-links a:hover{
   color:var(--text);
   border-color:var(--line);
-  background:rgba(255,255,255,.03);
+  background: #1E3A3A;
 }
 
 .nav-links{
@@ -213,6 +224,7 @@ img{max-width:100%; display:block}
 .nav-cta{
   display:flex; gap:10px; align-items:center;
 }
+
 .btn{
   display:inline-flex; align-items:center; justify-content:center;
   padding:10px 14px;
@@ -224,6 +236,7 @@ img{max-width:100%; display:block}
   letter-spacing:.02em;
   box-shadow: 0 10px 26px rgba(0,0,0,.25);
 }
+
 .btn:hover{border-color: rgba(34, 59, 26,.35)}
 .btn.primary{
   border-color: rgba(63, 72, 59, 0.35);
@@ -633,6 +646,7 @@ textarea{min-height:140px; resize:vertical}
   gap: 16px;
   padding-top: 18px;
   background:#1E3A3A;
+  font-size: 0.95rem;
 }
 
 /* Each category row: left = category, right = chips */
@@ -879,7 +893,7 @@ textarea{min-height:140px; resize:vertical}
   transform: scale(1.0);
 }
 
-/* OVERLAY for readability (keeps it sexy/corporate) */
+/* OVERLAY for readability */
 .home-hero-overlay{
   position: absolute;
   inset: 0;
@@ -1000,7 +1014,7 @@ textarea{min-height:140px; resize:vertical}
   transition: transform .25s ease, opacity .25s ease;
 }
 
-/* sexy hover */
+/* hover */
 .hero-cbrn-icons img:hover{
   transform: translateY(-3px) scale(1.05);
   opacity: 1;
@@ -1612,7 +1626,7 @@ textarea{min-height:140px; resize:vertical}
 .detector-trigger:hover{
   color: var(--text);
   border:1px solid var(--line);
-  background:rgba(255,255,255,.03);
+  background: #1E3A3A;
 }
 
 /* Dropdown menu */
@@ -1636,6 +1650,8 @@ textarea{min-height:140px; resize:vertical}
   backdrop-filter: blur(10px);
   width: max-content;
   max-width: 280px;
+
+  font-size: 0.95rem;
 }
 
 /* Links */
@@ -1762,6 +1778,7 @@ textarea{min-height:140px; resize:vertical}
   max-height: calc(100vh - 80px);
   overflow: auto;
   backdrop-filter: none;
+  font-size: 0.95rem;
 }
 
 .radmega.open{ display:block; }
